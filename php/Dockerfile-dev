@@ -1,0 +1,8 @@
+FROM php:8.2-apache
+
+ENV APP_ENV=dev
+
+WORKDIR /var/www/html
+
+COPY index.php /var/www/html/index.php
+COPY config.dev /var/www/html/config
