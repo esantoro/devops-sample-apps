@@ -13,12 +13,15 @@ func main() {
         fmt.Println(pwd + "/file.p12 not found");
         return;
     }
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
-	})
-
-	http.ListenAndServe(":80", nil)
+    fmt.Println(pwd + "/file.p12 found");
+    
+    
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    	fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
+    })
+    
+    fmt.Println("About to start the http server on port 8080");
+    http.ListenAndServe(":8080", nil)
 }
 
 func Exists(name string) bool {
