@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sample-php
+spec: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: sample-php
+  name: config
+  namespace: sample-php
+data:
+  APP_ENV: prod
+  config.prod: "prod"
+  config.dev: "dev"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sample-php
+  name: sample-php
+  namespace: sample-php
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sample-php
+  template:
+    metadata:
+      labels:
+        app: sample-php
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: config
+      containers:
+      - image: docker.io/esantoro/dp-sample-php:latest
+        name: dp-sample-go
+        env:
+        - name: APP_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: APP_ENV
+        livenessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          httpGet:
+            port: 80
+            path: "/index.php"
+        readinessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          successThreshold: 3
+          httpGet:
+            port: 80
+            path: "/index.php"
+        volumeMounts:
+        - name: config
+          subPath: config.prod
+          mountPath: /var/www/html/config.prod
+
