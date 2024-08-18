@@ -52,6 +52,13 @@ spec:
             configMapKeyRef:
               name: config
               key: APP_ENV
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "64Mi"
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
         livenessProbe:
           initialDelaySeconds: 10
           periodSeconds: 10

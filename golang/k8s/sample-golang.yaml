@@ -44,6 +44,13 @@ spec:
       - image: docker.io/esantoro/dp-sample-go:latest
         workingDir: "/app"
         name: dp-sample-go
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "64Mi"
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
         livenessProbe:
           initialDelaySeconds: 10
           periodSeconds: 10
