@@ -28,6 +28,11 @@ spec:
   selector:
     matchLabels:
       app: sample-php
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: "100%"
+      maxUnavailable: 2
   template:
     metadata:
       labels:
@@ -48,13 +53,13 @@ spec:
               name: config
               key: APP_ENV
         livenessProbe:
-          initialDelaySeconds: 30
+          initialDelaySeconds: 10
           periodSeconds: 10
           httpGet:
             port: 80
             path: "/index.php"
         readinessProbe:
-          initialDelaySeconds: 30
+          initialDelaySeconds: 10
           periodSeconds: 5
           successThreshold: 3
           httpGet:

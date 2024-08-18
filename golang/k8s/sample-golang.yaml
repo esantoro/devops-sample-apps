@@ -26,6 +26,11 @@ spec:
   selector:
     matchLabels:
       app: sample-golang
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: "100%"
+      maxUnavailable: 2
   template:
     metadata:
       labels:
@@ -40,13 +45,13 @@ spec:
         workingDir: "/app"
         name: dp-sample-go
         livenessProbe:
-          initialDelaySeconds: 30
+          initialDelaySeconds: 10
           periodSeconds: 10
           httpGet:
             port: 8080
             path: "/alive"
         readinessProbe:
-          initialDelaySeconds: 30
+          initialDelaySeconds: 10
           periodSeconds: 5
           successThreshold: 3
           httpGet:
