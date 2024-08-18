@@ -22,7 +22,7 @@ metadata:
   name: sample-golang
   namespace: sample-golang
 spec:
-  replicas: 3
+  replicas: 6
   selector:
     matchLabels:
       app: sample-golang
@@ -56,4 +56,20 @@ spec:
         - name: p12file
           subPath: p12
           mountPath: /app/file.p12
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sample-golang
+  name: sample-golang
+  namespace: sample-golang
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30002
+  selector:
+    app: sample-golang
+  type: NodePort

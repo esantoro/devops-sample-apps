@@ -24,7 +24,7 @@ metadata:
   name: sample-php
   namespace: sample-php
 spec:
-  replicas: 3
+  replicas: 6
   selector:
     matchLabels:
       app: sample-php
@@ -39,6 +39,7 @@ spec:
           name: config
       containers:
       - image: docker.io/esantoro/dp-sample-php:latest
+        imagePullPolicy: Always
         name: dp-sample-go
         env:
         - name: APP_ENV
@@ -63,4 +64,20 @@ spec:
         - name: config
           subPath: config.prod
           mountPath: /var/www/html/config.prod
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sample-php
+  name: sample-php
+  namespace: sample-php
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30001
+  selector:
+    app: sample-php
+  type: NodePort
