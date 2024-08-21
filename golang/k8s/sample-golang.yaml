@@ -111,3 +111,21 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sample-golang
+  namespace: sample-golang
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /api/v2
+        backend:
+          service:
+            name: sample-golang
+            port:
+              number: 8080

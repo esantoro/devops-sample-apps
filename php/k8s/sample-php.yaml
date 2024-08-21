@@ -119,3 +119,28 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sample-php
+  namespace: sample-php
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: sample-php
+            port:
+              number: 80
+      - pathType: Prefix
+        path: /api/v1
+        backend:
+          service:
+            name: sample-php
+            port:
+              number: 80
