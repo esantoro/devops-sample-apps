@@ -39,8 +39,6 @@ kubectl apply -f golang/k8s/sample-golang.yaml
 cyan "Installing php app ..."
 kubectl apply -f php/k8s/sample-php.yaml
 
-
-
 LB_HOSTNAME=$(kubectl -n ingress-nginx get service nginx-ingress-controller-ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 green "LoadBalancer at: $LB_HOSTNAME"

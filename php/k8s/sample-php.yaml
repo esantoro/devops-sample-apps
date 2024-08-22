@@ -38,6 +38,8 @@ spec:
       labels:
         app: sample-php
     spec:
+      nodeSelector:
+        workload: appcontainers
       volumes:
       - name: config
         configMap:

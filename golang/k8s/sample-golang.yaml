@@ -36,6 +36,8 @@ spec:
       labels:
         app: sample-golang
     spec:
+      nodeSelector:
+        workload: appcontainers
       volumes:
       - name: p12file
         secret:
